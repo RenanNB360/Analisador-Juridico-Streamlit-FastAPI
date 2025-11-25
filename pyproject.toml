@@ -1,0 +1,44 @@
+[project]
+name = "case-juscash"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.121.3",
+    "langchain>=1.0.8",
+    "langchain-core>=1.0.7",
+    "langchain-openai>=1.0.3",
+    "pytest>=9.0.1",
+    "pytest-cov>=7.0.0",
+    "python-dotenv>=1.2.1",
+    "ruff>=0.14.6",
+    "streamlit>=1.51.0",
+    "taskipy>=1.14.1",
+]
+
+[tool.ruff]
+line-length = 120
+exclude = ["tests"]
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+[tool.pytest.ini_options]
+pythonpath = "."
+testpaths = ["tests"]
+addopts = '-p no:warnings'
+
+[tool.taskipy.tasks]
+lint = 'ruff check'
+pre_format = 'ruff check --fix'
+format = 'ruff format'
+run = 'fastapi dev backend/app.py'
+pre_test = 'task lint'
+test = 'pytest tests -x --cov=backend -vv'
+post_test = 'coverage html'
