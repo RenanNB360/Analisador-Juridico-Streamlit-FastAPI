@@ -6,24 +6,29 @@ Este projeto é uma solução automatizada para análise de elegibilidade de pro
 
 ## Links Públicos da Aplicação
 
-> **Nota:** A aplicação está rodando em container Docker em ambiente de produção (Render/Railway).
+> A aplicação está rodando em ambiente de produção no **Render**, dividida em dois microsserviços (Frontend e Backend).
 
-- ** Interface Visual (UI):** [COLE_O_LINK_DO_SEU_STREAMLIT_AQUI]
-- ** Documentação da API (Swagger):** [COLE_O_LINK_DA_SUA_API_AQUI]/docs
-- ** Health Check:** [COLE_O_LINK_DA_SUA_API_AQUI]/health
+> **⚠️ IMPORTANTE - COLD START (Plano Gratuito):**
+> Como a hospedagem é gratuita, o servidor da API "dorme" após 15 minutos de inatividade.
+> **Passo recomendado para teste:**
+> 1. Clique no link da **API (Docs)** primeiro e aguarde carregar (pode levar de 40 a 60 segundos).
+> 2. Assim que a API carregar, abra o link da **Interface Visual**.
+> 3. Se abrir a Interface direto, pode ocorrer um erro de conexão inicial. Basta aguardar e recarregar a página.
+
+- ** Interface Visual (UI):** https://juscash-frontend.onrender.com
+- ** Documentação da API (Swagger):** https://juscash-backend.onrender.com/docs
+- ** Health Check:** https://juscash-backend.onrender.com/health
 
 ---
 
 ## Como Rodar Localmente (Docker)
 
-O projeto foi containerizado para garantir execução idêntica em qualquer ambiente. Siga os passos abaixo:
+O projeto foi dividido em microsserviços. Você precisará de **dois terminais** abertos para rodar o sistema completo.
 
 ### 1. Pré-requisitos
 
 - Docker instalado
 - Arquivo `.env` na raiz do projeto com as chaves necessárias (OpenAI/OpenRouter, LangSmith)
-
-### 2. Configuração do .env
 
 Por razões de segurança, as chaves de API não foram incluídas no repositório público.
 
@@ -44,18 +49,32 @@ LANGCHAIN_PROJECT="Case-JusCash"
 ```
 **Atenção: Sem este arquivo na raiz, a aplicação não conseguirá se comunicar com o modelo de IA.**
 
-### 3. Build e Execução
+### 2. Executando o Backend (API)
 
-Execute o comando abaixo para construir a imagem única (que contém tanto o Backend quanto o Frontend):
+No primeiro terminal, construa e rode a API:
 
 ```bash
-docker build -t juscash-app .
+# Constrói a imagem do Backend usando a raiz como contexto
+docker build -f backend/Dockerfile -t juscash-backend .
+
+# Roda o container na porta 8000 (lendo o arquivo .env)
+docker run -p 8000:8000 --env-file .env juscash-backend
 ```
+**Aguarde aparecer "Application startup complete".**
 
-Em seguida, inicie o container expondo as portas da API (8000) e da UI (8501):
+### 3. Executando o Frontend (UI)
+
+No segundo terminal, construa e rode o Streamlit:
 
 ```bash
-docker run -p 8000:8000 -p 8501:8501 --env-file .env juscash-app
+# Constrói a imagem do Frontend
+docker build -f frontend/Dockerfile -t juscash-frontend .
+
+# Roda o container na porta 8501
+# Nota: --network="host" é recomendado para Linux para facilitar a comunicação com localhost:8000
+# Se estiver no Windows/Mac, use -e API_URL="http://host.docker.internal:8000"
+
+docker run -p 8501:8501 --network="host" -e API_URL="http://localhost:8000" juscash-frontend
 ```
 
 ### 4. Acessando Localmente
