@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: backend/dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    networks:
+      - juscash-net
+
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: frontend/dockerfile
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://backend:8000
+    depends_on:
+      - backend
+    networks:
+      - juscash-net
+
+networks:
+  juscash-net:
+    driver: bridge

@@ -49,38 +49,25 @@ LANGCHAIN_PROJECT="Case-JusCash"
 ```
 **Atenção: Sem este arquivo na raiz, a aplicação não conseguirá se comunicar com o modelo de IA.**
 
-### 2. Executando o Backend (API)
+### 2. Executando a Aplicação
 
-No primeiro terminal, construa e rode a API:
-
-```bash
-# Constrói a imagem do Backend usando a raiz como contexto
-docker build -f backend/Dockerfile -t juscash-backend .
-
-# Roda o container na porta 8000 (lendo o arquivo .env)
-docker run -p 8000:8000 --env-file .env juscash-backend
-```
-**Aguarde aparecer "Application startup complete".**
-
-### 3. Executando o Frontend (UI)
-
-No segundo terminal, construa e rode o Streamlit:
+Execute o seguinte comando na raiz do projeto:
 
 ```bash
-# Constrói a imagem do Frontend
-docker build -f frontend/Dockerfile -t juscash-frontend .
-
-# Roda o container na porta 8501
-# Nota: --network="host" é recomendado para Linux para facilitar a comunicação com localhost:8000
-# Se estiver no Windows/Mac, use -e API_URL="http://host.docker.internal:8000"
-
-docker run -p 8501:8501 --network="host" -e API_URL="http://localhost:8000" juscash-frontend
+docker compose up --build
 ```
+
+Este comando irá:
+- Construir as imagens do Backend e Frontend
+- Iniciar ambos os serviços automaticamente
+- Configurar a rede entre os containers
+
+**Aguarde aparecer "Application startup complete" no terminal.**
 
 ### 4. Acessando Localmente
 
-- **Frontend (Streamlit):** http://localhost:8501
-- **API Docs (Swagger):** http://localhost:8000/docs
+- **Frontend (Streamlit):** http://0.0.0.0:8501
+- **API Docs (Swagger):** http://0.0.0.0:8000/docs
 
 ---
 
@@ -103,7 +90,7 @@ O projeto segue uma arquitetura desacoplada e modular:
 - **Linguagem:** Python 3.13
 - **Backend:** FastAPI (Alta performance e validação com Pydantic)
 - **Frontend:** Streamlit (Interface limpa para testes manuais e visualização de feedback)
-- **IA/LLM:** LangChain + Gemma/Llama (via OpenRouter/HuggingFace) para raciocínio jurídico
+- **IA/LLM:** LangChain + Mistral/Llama (via OpenRouter/HuggingFace) para raciocínio jurídico
 - **Gerenciamento de Dependências:** uv (para builds rápidos e seguros)
 
 ---
