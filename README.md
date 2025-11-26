@@ -15,9 +15,9 @@ Este projeto é uma solução automatizada para análise de elegibilidade de pro
 > 2. Assim que a API carregar, abra o link da **Interface Visual**.
 > 3. Se abrir a Interface direto, pode ocorrer um erro de conexão inicial. Basta aguardar e recarregar a página.
 
-- ** Interface Visual (UI):** https://juscash-frontend.onrender.com
-- ** Documentação da API (Swagger):** https://juscash-backend.onrender.com/docs
-- ** Health Check:** https://juscash-backend.onrender.com/health
+- ** Interface Visual (UI):** https://frontend-juscash.onrender.com
+- ** Documentação da API (Swagger):** https://backend-juscash.onrender.com/docs
+- ** Health Check:** https://backend-juscash.onrender.com/health
 
 ---
 
@@ -27,7 +27,7 @@ O projeto foi dividido em microsserviços. Você precisará de **dois terminais*
 
 ### 1. Pré-requisitos
 
-- Docker instalado
+- Docker e Docker Compose instalados
 - Arquivo `.env` na raiz do projeto com as chaves necessárias (OpenAI/OpenRouter, LangSmith)
 
 Por razões de segurança, as chaves de API não foram incluídas no repositório público.
@@ -64,7 +64,7 @@ Este comando irá:
 
 **Aguarde aparecer "Application startup complete" no terminal.**
 
-### 4. Acessando Localmente
+### 3. Acessando Localmente
 
 - **Frontend (Streamlit):** http://0.0.0.0:8501
 - **API Docs (Swagger):** http://0.0.0.0:8000/docs
