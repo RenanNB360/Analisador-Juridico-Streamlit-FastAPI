@@ -1,23 +1,6 @@
-# JusCash Case AI - Verificador de Processos Judiciais
+# Verificador de Processos Judiciais
 
 Este projeto é uma solução automatizada para análise de elegibilidade de processos judiciais. Utilizando **Inteligência Artificial (LLM)**, o sistema lê dados estruturados de processos, verifica conformidade com as Políticas Internas (POL-1 a POL-8) e fornece um veredito estruturado (Aprovado, Reprovado ou Incompleto) com justificativa jurídica.
-
----
-
-## Links Públicos da Aplicação
-
-> A aplicação está rodando em ambiente de produção no **Render**, dividida em dois microsserviços (Frontend e Backend).
-
-> **⚠️ IMPORTANTE - COLD START (Plano Gratuito):**
-> Como a hospedagem é gratuita, o servidor da API "dorme" após 15 minutos de inatividade.
-> **Passo recomendado para teste:**
-> 1. Clique no link da **API (Docs)** primeiro e aguarde carregar (pode levar de 40 a 60 segundos).
-> 2. Assim que a API carregar, abra o link da **Interface Visual**.
-> 3. Se abrir a Interface direto, pode ocorrer um erro de conexão inicial. Basta aguardar e recarregar a página.
-
-- ** Interface Visual (UI):** https://frontend-juscash.onrender.com
-- ** Documentação da API (Swagger):** https://backend-juscash.onrender.com/docs
-- ** Health Check:** https://backend-juscash.onrender.com/health
 
 ---
 
@@ -45,7 +28,7 @@ OPENROUTER_BASE_URL="http-OpenRouter"
 LANGCHAIN_TRACING_V2=true
 LANGSMITH_ENDPOINT="http-langsmith"
 LANGCHAIN_API_KEY="chave-langsmith"
-LANGCHAIN_PROJECT="Case-JusCash"
+LANGCHAIN_PROJECT="Case-ia"
 ```
 **Atenção: Sem este arquivo na raiz, a aplicação não conseguirá se comunicar com o modelo de IA.**
 
